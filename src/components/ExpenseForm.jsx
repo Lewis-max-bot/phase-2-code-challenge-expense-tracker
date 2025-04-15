@@ -1,51 +1,34 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 function ExpenseForm({ onAddExpense }) {
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    amount: "",
+    category: "",
+    description: ""
+  });
 
-  const handleSubmit = (e) => {
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
-    const newExpense = {
-      id: Date.now(),
-      description,
-      amount,
-      category,
-    };
+    const newExpense = { ...formData, id: Date.now() };
     onAddExpense(newExpense);
-    setDescription("");
-    setAmount("");
-    setCategory("");
-  };
+    setFormData({ name: "", amount: "", category: "", description: "" });
+  }
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        required
-      />
-      <input
-        type="number"
-        placeholder="Amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        required
-      />
-      <input
-        type="text"
-        placeholder="Category"
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        required
-      />
+      <input name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
+      <input name="amount" placeholder="Amount" value={formData.amount} onChange={handleChange} />
+      <input name="category" placeholder="Category" value={formData.category} onChange={handleChange} />
+      <input name="description" placeholder="Description" value={formData.description} onChange={handleChange} />
       <button type="submit">Add Expense</button>
     </form>
   );
 }
 
 export default ExpenseForm;
-
