@@ -19,9 +19,11 @@ function App() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>Expense Tracker</h1>
-      <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
+      <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} /> 
+      <ExpenseTable expenses={filteredExpenses} /> 
       <ExpenseForm onAddExpense={handleAddExpense} />
-      <ExpenseTable expenses={filteredExpenses} />
+       
+      
     </div>
   );
 }
